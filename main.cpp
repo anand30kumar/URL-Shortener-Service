@@ -8,18 +8,17 @@
 
 using namespace std;
 
-// URL Shortening logic
+=
 const string BASE_URL = "http://short.ly/";
 const string CHARSET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 const int SHORT_URL_LENGTH = 6;
 
-// Maps for data storage
-unordered_map<string, string> urlMap;          // Stores short URL to original URL mapping
-unordered_map<string, int> clickCountMap;      // Stores the click counts for each short URL
-unordered_map<string, time_t> expirationMap;   // Stores expiration time for each URL
+
+unordered_map<string, string> urlMap;         
+unordered_map<string, int> clickCountMap;    
+unordered_map<string, time_t> expirationMap;  
 int urlCount = 0;
 
-// Generate a random short URL of fixed length
 string generateShortUrl() {
     string shortUrl;
     random_device rd;
@@ -36,7 +35,7 @@ string shortenUrl(const string& originalUrl, int expirationHours) {
     string shortUrl;
     do {
         shortUrl = generateShortUrl();
-    } while (urlMap.find(shortUrl) != urlMap.end());  // Ensure unique short URL
+    } while (urlMap.find(shortUrl) != urlMap.end());  
 
     urlMap[shortUrl] = originalUrl;
     expirationMap[shortUrl] = time(nullptr) + expirationHours * 3600;
@@ -46,7 +45,7 @@ string shortenUrl(const string& originalUrl, int expirationHours) {
     return BASE_URL + shortUrl;
 }
 
-// Retrieve original URL using the short URL
+
 string retrieveOriginalUrl(const string& shortUrl) {
     string shortUrlKey = shortUrl.substr(BASE_URL.length());
     if (urlMap.find(shortUrlKey) != urlMap.end()) {
@@ -62,7 +61,7 @@ string retrieveOriginalUrl(const string& shortUrl) {
     return "Invalid or expired short URL.";
 }
 
-// Get statistics for short URL
+
 string getUrlStats(const string& shortUrl) {
     string shortUrlKey = shortUrl.substr(BASE_URL.length());
     if (clickCountMap.find(shortUrlKey) != clickCountMap.end()) {
